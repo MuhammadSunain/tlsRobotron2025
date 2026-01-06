@@ -1,0 +1,147 @@
+/* ============================================================
+   RESPONSIVENESS (Down to 350px)
+   ============================================================ */
+
+@media (max-width: 768px) {
+  /* Adjust Section Padding */
+  .section {
+    padding: 50px 0;
+  }
+
+  /* Navbar Branding */
+  .navbar-brand img {
+    width: 120px;
+  }
+
+  /* Banner Heading */
+  .banner h1 {
+    font-size: clamp(1.8rem, 8vw, 2.5rem);
+    margin-bottom: 0.5rem;
+  }
+
+  /* Countdown Boxes - Ensure they don't break line awkwardly */
+  .countdown {
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .cd-box {
+    min-width: 70px;
+    padding: 8px 5px;
+  }
+
+  .cd-box span {
+    font-size: 1.5rem;
+  }
+
+  /* Categories Grid */
+  .category-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .category-actions .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Prize Strip Adjustments */
+  .prize-hero h3 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Hero Left content centering and spacing */
+  .container {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  .banner h1 {
+    text-align: center;
+    font-size: 2rem !important;
+  }
+
+  .cd-box {
+    text-align: center;
+    min-width: 50px !important;
+  }
+
+  .cd-box span {
+    font-size: 13px !important;
+  }
+
+  .cd-label {
+    font-size: 0.45rem !important;
+  }
+  .hero-left {
+    padding: 0 10px;
+  }
+  .btn-primary, .btn-ghost {
+    padding: 10px 15px !important;
+    font-size: 12px !important;
+    width: 48%;
+  }
+
+  .hero-kicker span {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+  }
+
+  /* Hero Actions - Stack buttons on very small screens */
+  .hero-actions {
+    flex-direction: row;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .hero-lead {
+    font-size: 12px !important; 
+  }
+
+  .hero-actions .btn {
+    /* width: 100%; */
+    margin-bottom: 10px;
+  }
+
+  /* Mini Stats Grid - Switch to 1 column if it feels cramped */
+  .hero-mini-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Powered By Logos */
+  .powered-logos {
+    gap: 20px;
+  }
+
+  .powered-logo {
+    height: 80px;
+  }
+}
+
+/* Specific Fix for 350px (Ultra Small Devices) */
+@media (max-width: 350px) {
+  .container {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  .banner h1 {
+    font-size: 1.6rem !important;
+  }
+
+  .cd-box {
+    min-width: 60px !important;
+  }
+
+  .cd-box span {
+    font-size: 13px !important;
+  }
+
+  .cd-label {
+    font-size: 0.65rem !important;
+  }
+}

@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ROBOTRON 2026 — Bulk Institute Registration</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Font Awesome 4.7 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+
+  <!-- AOS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --bg-0:#070b16; --bg-1:#0b1426; --bg-2:#0f1b33;
+      --txt:#e6f1ff; --muted:#9fb3c8;
+      --primary:#6c5ce7; --primary-2:#00e5ff; --accent:#00ff9d;
+      --glass:rgba(255,255,255,.06); --glass-strong:rgba(255,255,255,.09);
+      --border-grad: linear-gradient(90deg,var(--primary-2),var(--primary),var(--accent));
+      --card-shadow: 0 14px 40px rgba(0,0,0,.38);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      font-family:'Roboto',sans-serif;
+      color:var(--txt);
+      background:var(--bg-0);
+      min-height:100vh;
+      overflow-x:hidden;
+      position:relative;
+    }
+
+    /* Aurora + grid */
+    body::before{
+      content:"";
+      position:fixed; inset:0; z-index:-4; pointer-events:none;
+      background:
+        radial-gradient(900px 520px at 80% -100px, rgba(108,92,231,.28), transparent 60%),
+        radial-gradient(800px 480px at -10% 120%, rgba(0,229,255,.22), transparent 60%),
+        radial-gradient(700px 420px at 110% 70%, rgba(0,255,157,.12), transparent 60%);
+    }
+    body::after{
+      content:"";
+      position:fixed; inset:0; z-index:-3; opacity:.06; pointer-events:none;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size:40px 40px;
+      animation:moveGrid 40s linear infinite;
+    }
+    @keyframes moveGrid { from{transform:translateY(0)} to{transform:translateY(40px)} }
+
+    h1,h2,h3,h4{font-family:'Orbitron',sans-serif}
+
+    .navbar{
+      background: rgba(7,11,22,.75);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .navbar-brand{
+      font-weight:800;
+      letter-spacing:1.2px;
+      color:#fff !important;
+      display:flex;
+      align-items:center;
+      gap:.6rem;
+    }
+    .navbar-brand img {
+      width: 160px;
+      filter: drop-shadow(0 10px 24px rgba(0, 0, 0, .45));
+    }
+    .brand-accent{
+      width:26px;height:26px;border-radius:6px;
+      background:var(--border-grad);
+      box-shadow:0 0 18px rgba(0,229,255,.35);
+    }
+
+    .section{
+      padding:70px 0;
+      background: linear-gradient(180deg, rgba(11,20,38,.65), rgba(15,27,51,.55));
+      border-top:1px solid rgba(255,255,255,.07);
+      border-bottom:1px solid rgba(255,255,255,.07);
+      position:relative;
+      z-index:1;
+    }
+
+    .section-title{text-align:center;margin-bottom:28px}
+    .title-underline{
+      width:88px;height:3px;margin:10px auto 0;
+      background:var(--border-grad);
+      border-radius:999px;
+      box-shadow:0 0 20px rgba(0,229,255,.35);
+    }
+
+    .glass-card{
+      background:var(--glass);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:16px;
+      box-shadow:var(--card-shadow);
+    }
+
+    .btn-primary{
+      background:var(--border-grad);
+      border:0;
+      border-radius:12px;
+      padding:10px 20px;
+      font-weight:700;
+      box-shadow:0 10px 30px rgba(0,229,255,.18);
+    }
+    .btn-outline-light{
+      color:#e6f1ff;
+      border-color:rgba(255,255,255,.25);
+      border-radius:12px;
+    }
+    .btn-outline-light:hover{ background:rgba(255,255,255,.06); }
+
+    .form-label{
+      color:#d9e9ff;
+      text-transform:uppercase;
+      font-size:.85rem;
+      letter-spacing:.8px;
+    }
+
+    .form-control,.form-select{
+      background:#0e1a31;
+      color:#fff;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:10px;
+      padding:10px 12px;
+    }
+    .form-control:focus,.form-select:focus{
+      box-shadow:0 0 0 .25rem rgba(0,229,255,.15);
+      border-color:#00e5ff;
+      background:#0f1f3a;
+      color:#fff;
+    }
+
+    footer{
+      background:#060a13;
+      color:#9fb3c8;
+      padding:26px 0;
+      text-align:center;
+      position:relative;
+      z-index:1;
+    }
+
+    .muted{color:var(--muted)}
+
+    /* Team card */
+    .team-card{ position:relative; overflow:hidden; }
+    .team-card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(500px 200px at 20% 0%, rgba(0,229,255,.12), transparent 55%),
+                  radial-gradient(500px 200px at 80% 100%, rgba(108,92,231,.12), transparent 55%);
+      pointer-events:none;
+      z-index:0;
+    }
+    .team-card > *{ position:relative; z-index:1; }
+
+    .team-remove{ position:absolute; top:10px; right:10px; z-index:2; }
+
+    .summary-table th,.summary-table td{vertical-align:middle}
+
+    .pill{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      margin:2px 6px 2px 0;
+      font-size:.86rem;
+    }
+
+    /* Sticky action bar */
+    .sticky-actions{
+      position: sticky;
+      bottom: 14px;
+      z-index: 5;
+      margin-top: 18px;
+    }
+    .sticky-actions .glass-card{
+      border-radius:16px;
+      padding:12px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .sticky-actions .total{
+      font-weight:900;
+      color: var(--accent);
+      letter-spacing:.2px;
+    }
+
+    /* Bubble background */
+    #bubbles{
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .bubble{
+      position:absolute;
+      bottom:-120px;
+      border-radius:999px;
+      filter: blur(.2px);
+      opacity:.22;
+      animation: floatUp linear infinite;
+      mix-blend-mode: screen;
+    }
+    @keyframes floatUp{
+      from{ transform: translateY(0) translateX(0); }
+      to{ transform: translateY(-130vh) translateX(var(--drift, 40px)); }
+    }
+
+    .badge-soft{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      color: #dbeaff;
+      font-size:.9rem;
+    }
+
+    /* Members */
+    .member-row{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      border-radius:14px;
+      padding:12px;
+    }
+    .member-actions{
+      display:flex;
+      justify-content:flex-end;
+      gap:8px;
+      margin-top:10px;
+    }
+    .mini-btn{
+      border-radius:10px;
+      padding:8px 12px;
+      font-weight:700;
+    }
+
+    .team-footer{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-top:14px;
+      padding-top:12px;
+      border-top:1px solid rgba(255,255,255,.10);
+    }
+    .team-total{
+      font-weight:900;
+      color: var(--accent);
+    }
+
+    .hint{
+      color: var(--muted);
+      font-size:.92rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- bubbles layer -->
+  <div id="bubbles"></div>
+
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><img src="robotronlogo.png" alt=""></a>
+      <div class="d-flex gap-2">
+        <a href="index.html" class="btn btn-outline-light btn-sm"><i class="fa fa-arrow-left"></i> Back to Home</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="section-title" data-aos="fade-up">
+        <h2>Bulk Registration — Institute</h2>
+        <div class="title-underline"></div>
+        <p class="muted mt-2">Add multiple teams under one institute. Choose <b>one category per team</b>. All fees are in PKR.</p>
+        <div class="d-flex justify-content-center gap-2 flex-wrap mt-3">
+          <span class="badge-soft"><i class="fa fa-shield"></i> Secure submission</span>
+          <span class="badge-soft"><i class="fa fa-bolt"></i> Auto fee calculation</span>
+          <span class="badge-soft"><i class="fa fa-check-circle"></i> Confirmation on submit</span>
+        </div>
+      </div>
+
+      <!-- Institute info -->
+      <div class="glass-card p-3 p-md-4 mb-4" data-aos="fade-up" data-aos-delay="60">
+        <h4 class="mb-3">Institute Details</h4>
+        <form id="instForm" class="row g-3" novalidate>
+          <div class="col-md-4">
+            <label class="form-label">Select your institute</label>
+            <select id="instituteSelect" class="form-select" required>
+              <option value="">Choose an option</option>
+              <option>School</option><option>College</option><option>University</option>
+            </select>
+            <div class="invalid-feedback">Please select your institute.</div>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Institute Name</label>
+            <input id="instituteName" class="form-control" placeholder="If not in the list"/>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label"> Contact</label>
+            <input id="contact" class="form-control" type="tel" placeholder="+92XXXXXXXXXX" pattern="^[+]?[\d\s\-()]{7,}$" required>
+            <div class="invalid-feedback">Enter a valid contact number.</div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label"> Email</label>
+            <input id="email" class="form-control" type="email" required>
+            <div class="invalid-feedback">Enter a valid email.</div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Notes (optional)</label>
+            <input id="notes" class="form-control" placeholder="Any additional info"/>
+          </div>
+        </form>
+      </div>
+
+      <!-- Teams builder -->
+      <div class="glass-card p-3 p-md-4 mb-4" data-aos="fade-up" data-aos-delay="90">
+        <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+          <h4 class="mb-0">Teams</h4>
+          <div class="d-flex gap-2">
+            <button id="addTeamBtn" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Add Team</button>
+          </div>
+        </div>
+        <div class="hint mb-2">
+          Tip: Add team name, select category, then add members one-by-one.
+        </div>
+        <div id="teamsWrap" class="row g-3"></div>
+      </div>
+
+      <!-- Summary -->
+      <div class="glass-card p-3 p-md-4 mb-4" data-aos="fade-up" data-aos-delay="120">
+        <h4 class="mb-3">Institute Summary</h4>
+        <div id="summaryEmpty" class="muted">Add at least one team to see the summary here.</div>
+        <div id="summaryTableWrap" class="table-responsive d-none">
+          <table class="table table-sm table-hover align-middle summary-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Team Name</th>
+                <th>Members</th>
+                <th>Category</th>
+                <th class="text-end">Total (PKR)</th>
+              </tr>
+            </thead>
+            <tbody id="summaryBody"></tbody>
+            <tfoot>
+              <tr>
+                <th colspan="4" class="text-end">Grand Total</th>
+                <th class="text-end" id="grandTotal">₨ 0 PKR</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Payment info -->
+      <div class="glass-card p-3 p-md-4 mb-4" data-aos="fade-up" data-aos-delay="150">
+        <h4 class="mb-2">Payment Guidelines</h4>
+
+        <ul class="mb-3">
+          <li>All registrations are submitted with <strong>Payment Status: Pending</strong></li>
+          <li>After submission, send your <strong>payment proof screenshot</strong> on WhatsApp</li>
+          <li>Mention your <strong>Institute Name</strong> and <strong>Reference ID</strong></li>
+        </ul>
+
+        <div class="badge-soft">
+          📱 WhatsApp for Payment Confirmation:
+          <a href="https://wa.me/923XXXXXXXXX" target="_blank" class="ms-2 text-info">
+            +92 3XX XXXXXXX
+          </a>
+        </div>
+
+        <p class="muted mt-2">
+          Registration will be confirmed only after payment verification by the ROBOTRON team.
+        </p>
+      </div>
+
+      <!-- Sticky actions -->
+      <div class="sticky-actions" data-aos="fade-up" data-aos-delay="180">
+        <div class="glass-card">
+          <div class="d-flex flex-column">
+            <div class="muted" style="font-size:.85rem">Grand Total</div>
+            <div class="total" id="stickyTotal">₨ 0 PKR</div>
+          </div>
+          <div class="d-flex gap-2">
+            <button id="submitAll" class="btn btn-primary">
+              <i class="fa fa-paper-plane"></i> Submit
+            </button>
+            <button id="resetAll" class="btn btn-outline-light">
+              <i class="fa fa-undo"></i> Reset
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <p class="muted mt-3" style="font-size:.9rem" data-aos="fade-up" data-aos-delay="210">
+        By submitting, you confirm the above teams and fees. A confirmation email will be sent.
+      </p>
+    </div>
+  </section>
+
+  <!-- Status Modal -->
+  <div class="modal fade" id="statusModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content glass-card">
+        <div class="modal-header border-0">
+          <h5 class="modal-title" id="statusTitle"></h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" id="statusMessage"></div>
+        <div class="modal-footer border-0">
+          <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Robotron. Made By SRET</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap + AOS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+  <!-- Main logic (modules) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import {
+      getFirestore, collection, addDoc, serverTimestamp,
+      getDocs, query, orderBy, limit
+    } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+    /* ------------ Firebase ------------ */
+    const firebaseConfig = {
+      apiKey: "AIzaSyChGwuGwBV4_n_eK8JUCBOLeshcqKEsgAo",
+      authDomain: "robtron3-d77fe.firebaseapp.com",
+      projectId: "robtron3-d77fe",
+      storageBucket: "robtron3-d77fe.firebasestorage.app",
+      messagingSenderId: "1058046235994",
+      appId: "1:1058046235994:web:0ebc43e531ac14195a0f63",
+      measurementId: "G-96ETYYF7HR"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    /* ------------ AOS init ------------ */
+    AOS.init({ duration: 800, once: true, offset: 80 });
+
+    /* ------------ Bubble generator ------------ */
+    (function bubbles(){
+      const root = document.getElementById('bubbles');
+      const COLORS = [
+        'rgba(0,229,255,.55)',
+        'rgba(108,92,231,.55)',
+        'rgba(0,255,157,.45)',
+        'rgba(255,255,255,.35)'
+      ];
+      const COUNT = 26;
+      for(let i=0;i<COUNT;i++){
+        const b = document.createElement('span');
+        b.className = 'bubble';
+        const size = rand(10, 60);
+        b.style.width = size+'px';
+        b.style.height = size+'px';
+        b.style.left = rand(0, 100)+'%';
+        b.style.background = COLORS[rand(0, COLORS.length-1)];
+        b.style.opacity = (Math.random()*0.22 + 0.08).toFixed(2);
+        b.style.filter = `blur(${(Math.random()*1.2).toFixed(2)}px)`;
+        b.style.animationDuration = rand(10, 26)+'s';
+        b.style.animationDelay = (-rand(0, 22))+'s';
+        b.style.setProperty('--drift', rand(-60, 60)+'px');
+        root.appendChild(b);
+      }
+      function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+    })();
+
+    /* ------------ Helpers ------------ */
+    function currencyPKR(n){
+      const val = Number(n || 0);
+      return `₨ ${val.toLocaleString('en-PK')} PKR`;
+    }
+    function uid(){
+      return Math.random().toString(36).slice(2,9);
+    }
+
+    function showStatus(type, title, message) {
+      const modalEl = document.getElementById('statusModal');
+      const titleEl = document.getElementById('statusTitle');
+      const msgEl = document.getElementById('statusMessage');
+
+      titleEl.innerHTML = type === 'success'
+        ? `<i class="fa fa-check-circle text-success me-2"></i> ${title}`
+        : `<i class="fa fa-exclamation-triangle text-danger me-2"></i> ${title}`;
+
+      msgEl.innerHTML = message;
+
+      const modal = new bootstrap.Modal(modalEl);
+      modal.show();
+    }
+
+    /* ------------ Load categories from Firestore ------------ */
+    async function loadCategoriesFromFirebase(){
+      const qref = query(collection(db, 'categories'), orderBy('createdAt','desc'), limit(500));
+      const snap = await getDocs(qref);
+
+      const list = snap.docs.map(d => {
+        const x = d.data() || {};
+        const title = String(x.title || x.name || x.categoryName || d.id || '').trim();
+        const catType = String(x.catType || x.catType || x.catType || d.id || '').trim();
+        const fee = Number(x.priceRs ?? x.fee ?? x.price ?? 0);
+        return { id: d.id, title, fee, catType };
+      }).filter(c => c.id && c.title);
+
+      const map = {};
+      list.forEach(c => map[c.id] = c);
+      return { list, map };
+    }
+
+    let CATEGORIES = [];
+    let CATMAP = {};
+
+    try{
+      const result = await loadCategoriesFromFirebase();
+      CATEGORIES = result.list;
+      CATMAP = result.map;
+    }catch(err){
+      console.error('Could not load categories:', err);
+      alert('Could not load categories from Firebase. Please try again or check Firestore rules.');
+    }
+
+    /* ------------ Teams UI ------------ */
+    const teamsWrap = document.getElementById('teamsWrap');
+    let teamCounter = 0;
+
+    function categoryOptionsHtml(selectedId=''){
+      if(!CATEGORIES.length){
+        return `<option value="">No categories found</option>`;
+      }
+      const opts = CATEGORIES.map(c=>{
+        const sel = (String(selectedId) === String(c.id)) ? 'selected' : '';
+        return `<option value="${c.id}" ${sel}>${escapeHtml(c.title)} — ${currencyPKR(c.fee)} — (${escapeHtml(c.catType)})</option>`;
+      }).join('');
+      return `<option value="">Select a category</option>` + opts;
+    }
+
+    /* ✅ UPDATED: Member fields = Name, Age, Class, CNIC/B-Form */
+    function memberRowHtml(teamId, memberId){
+      return `
+        <div class="member-row" data-member-id="${memberId}">
+          <div class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label">Member Name</label>
+              <input class="form-control mem-name" placeholder="e.g., Ali Khan" required />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Age</label>
+              <input class="form-control mem-age" type="number" min="3" max="60" placeholder="e.g., 12" required />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Class</label>
+              <input class="form-control mem-class" placeholder="e.g., Grade 7 / O2" required />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">CNIC / B-Form</label>
+              <input class="form-control mem-cnic" placeholder="e.g., 42101-1234567-1" required />
+            </div>
+          </div>
+
+          <div class="member-actions">
+            <button type="button" class="btn btn-outline-light btn-sm mini-btn remove-member"
+              data-team-id="${teamId}" data-member-id="${memberId}">
+              <i class="fa fa-trash"></i> Remove
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function teamCard(id){
+      const defaultMemberId = uid();
+      return `
+        <div class="col-12" data-team-id="${id}">
+          <div class="glass-card p-3 p-md-4 team-card" data-aos="fade-up">
+            <button type="button" class="btn btn-outline-light btn-sm team-remove" data-remove="${id}">
+              <i class="fa fa-trash"></i>
+            </button>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Team Name</label>
+                <input class="form-control team-name" required placeholder="e.g., Alpha Bots">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Select Category (Single)</label>
+                <select class="form-select team-category" required>
+                  ${categoryOptionsHtml('')}
+                </select>
+                <div class="hint mt-1">Only one category is allowed per team.</div>
+              </div>
+
+              <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                  <div>
+                    <label class="form-label mb-1">Team Members</label>
+                    <div class="hint">Click “Add Member” to add each participant with required info.</div>
+                  </div>
+                  <button type="button" class="btn btn-primary btn-sm add-member" data-team-id="${id}">
+                    <i class="fa fa-user-plus"></i> Add Member
+                  </button>
+                </div>
+
+                <div class="members-wrap mt-3 d-grid gap-3" data-team-id="${id}">
+                  ${memberRowHtml(id, defaultMemberId)}
+                </div>
+              </div>
+            </div>
+
+            <div class="team-footer">
+              <div class="hint">Team total is based on the selected category fee.</div>
+              <div class="team-total">Team Total: <span class="team-total-amt">${currencyPKR(0)}</span></div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function escapeHtml(s){
+      return String(s||'').replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
+    }
+
+    function addTeam(){
+      teamCounter += 1;
+      teamsWrap.insertAdjacentHTML('beforeend', teamCard(teamCounter));
+      attachHandlers();
+      buildSummary();
+      AOS.refresh();
+    }
+
+    function removeTeam(id){
+      const el = teamsWrap.querySelector(`[data-team-id="${id}"]`);
+      if (el) el.remove();
+      buildSummary();
+    }
+
+    function getTeamCategory(block){
+      const catId = block.querySelector('.team-category')?.value || '';
+      const cat = CATMAP[catId];
+      return cat ? { id: cat.id, title: cat.title, fee: Number(cat.fee||0) } : null;
+    }
+
+    function readMembers(block){
+      const membersWrap = block.querySelector('.members-wrap');
+      const rows = membersWrap ? [...membersWrap.querySelectorAll('[data-member-id]')] : [];
+
+      return rows.map(r => ({
+        name: (r.querySelector('.mem-name')?.value || '').trim(),
+        age: Number(r.querySelector('.mem-age')?.value || 0),
+        class: (r.querySelector('.mem-class')?.value || '').trim(),
+        cnic: (r.querySelector('.mem-cnic')?.value || '').trim()
+      })).filter(m => m.name || m.age || m.class || m.cnic);
+    }
+
+    function computeTeamTotal(block){
+      const cat = getTeamCategory(block);
+      return cat ? Number(cat.fee||0) : 0;
+    }
+
+    function updateTeamTotalUI(block){
+      const total = computeTeamTotal(block);
+      const el = block.querySelector('.team-total-amt');
+      if(el) el.textContent = currencyPKR(total);
+    }
+
+    function readTeams(){
+      const blocks = [...teamsWrap.querySelectorAll('[data-team-id]')];
+      return blocks.map((block, idx) => {
+        const name = (block.querySelector('.team-name')?.value || '').trim();
+        const category = getTeamCategory(block);
+        const members = readMembers(block);
+        const total = category ? Number(category.fee||0) : 0;
+
+        return { idx: idx+1, teamName: name, category, members, total };
+      }).filter(t => t.teamName || t.members.length || t.category);
+    }
+
+    function buildSummary(){
+      const teams = readTeams();
+      const summaryBody = document.getElementById('summaryBody');
+      const empty = document.getElementById('summaryEmpty');
+      const tableWrap = document.getElementById('summaryTableWrap');
+
+      // update per-team totals UI
+      [...teamsWrap.querySelectorAll('[data-team-id]')].forEach(updateTeamTotalUI);
+
+      if(!teams.length){
+        tableWrap.classList.add('d-none');
+        empty.classList.remove('d-none');
+        summaryBody.innerHTML = '';
+        document.getElementById('grandTotal').textContent = currencyPKR(0);
+        document.getElementById('stickyTotal').textContent = currencyPKR(0);
+        return;
+      }
+
+      empty.classList.add('d-none');
+      tableWrap.classList.remove('d-none');
+
+      let grand = 0;
+      summaryBody.innerHTML = teams.map(t=>{
+        grand += Number(t.total||0);
+
+        const mems = t.members.map(m=>{
+          const title = `${m.name} • Age ${m.age || '-'} • ${m.class || '-'} • ${m.cnic}`.trim();
+          return `<span class="pill">${escapeHtml(title)}</span>`;
+        }).join('');
+
+        const catText = t.category
+          ? `<span class="pill">${escapeHtml(t.category.title)}</span>`
+          : '-';
+
+        return `<tr>
+          <td>${t.idx}</td>
+          <td>${escapeHtml(t.teamName || '-')}</td>
+          <td>${mems || '-'}</td>
+          <td>${catText}</td>
+          <td class="text-end">${currencyPKR(t.total)}</td>
+        </tr>`;
+      }).join('');
+
+      document.getElementById('grandTotal').textContent = currencyPKR(grand);
+      document.getElementById('stickyTotal').textContent = currencyPKR(grand);
+    }
+
+    function attachHandlers(){
+      // remove team
+      teamsWrap.querySelectorAll('[data-remove]').forEach(btn=>{
+        btn.onclick = ()=> removeTeam(btn.getAttribute('data-remove'));
+      });
+
+      // add member
+      teamsWrap.querySelectorAll('.add-member').forEach(btn=>{
+        btn.onclick = ()=>{
+          const teamId = btn.getAttribute('data-team-id');
+          const wrap = teamsWrap.querySelector(`.members-wrap[data-team-id="${teamId}"]`);
+          if(!wrap) return;
+          wrap.insertAdjacentHTML('beforeend', memberRowHtml(teamId, uid()));
+          attachHandlers();
+          buildSummary();
+        };
+      });
+
+      // remove member
+      teamsWrap.querySelectorAll('.remove-member').forEach(btn=>{
+        btn.onclick = ()=>{
+          const teamId = btn.getAttribute('data-team-id');
+          const memberId = btn.getAttribute('data-member-id');
+          const wrap = teamsWrap.querySelector(`.members-wrap[data-team-id="${teamId}"]`);
+          if(!wrap) return;
+
+          const row = wrap.querySelector(`[data-member-id="${memberId}"]`);
+          if(row) row.remove();
+
+          // keep at least 1 member row
+          const remaining = wrap.querySelectorAll('[data-member-id]').length;
+          if(remaining === 0){
+            wrap.insertAdjacentHTML('beforeend', memberRowHtml(teamId, uid()));
+          }
+
+          attachHandlers();
+          buildSummary();
+        };
+      });
+
+      // input changes -> summary
+      teamsWrap.querySelectorAll('input,select,textarea').forEach(el=>{
+        el.oninput = buildSummary;
+        el.onchange = buildSummary;
+      });
+    }
+
+    document.getElementById('addTeamBtn').addEventListener('click', addTeam);
+
+    // initial team
+    addTeam();
+
+    /* ------------ Validation ------------ */
+    function validateInstitute(){
+      const form = document.getElementById('instForm');
+      const ok = form.checkValidity();
+      if(!ok) form.classList.add('was-validated');
+      return ok;
+    }
+
+    function validateTeams(teams){
+      if(!teams.length){
+        alert('Please add at least one team.');
+        return false;
+      }
+
+      for(const t of teams){
+        if(!t.teamName){
+          alert('Each team must have a Team Name.');
+          return false;
+        }
+        if(!t.category){
+          alert(`Team "${t.teamName}" must select a category.`);
+          return false;
+        }
+        if(!t.members.length){
+          alert(`Team "${t.teamName}" must have at least one member.`);
+          return false;
+        }
+
+        for(const m of t.members){
+          const ageOk = Number.isFinite(m.age) && m.age > 0;
+          if(!(m.name && ageOk && m.class && m.cnic)){
+            alert(`In team "${t.teamName}", each member must have Name, Age, Class, and CNIC/B-Form.`);
+            return false;
+          }
+        }
+      }
+
+      return true;
+    }
+
+    /* ------------ Reset ------------ */
+    document.getElementById('resetAll').addEventListener('click', ()=>{
+      document.getElementById('instForm').reset();
+      document.getElementById('instForm').classList.remove('was-validated');
+      teamsWrap.innerHTML = '';
+      teamCounter = 0;
+      addTeam();
+      buildSummary();
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+
+    /* ------------ Submit ------------ */
+    document.getElementById('submitAll').addEventListener('click', async ()=>{
+      if(!validateInstitute()){
+        window.scrollTo({top:0,behavior:'smooth'});
+        return;
+      }
+
+      const teams = readTeams();
+      if(!validateTeams(teams)) return;
+
+      const grandTotal = teams.reduce((s,t)=>s + Number(t.total||0), 0);
+
+      const payload = {
+        type: 'bulk_institute',
+        instituteDropdown: document.getElementById('instituteSelect').value,
+        instituteName: (document.getElementById('instituteName').value||'').trim(),
+        contact: (document.getElementById('contact').value||'').trim(),
+        email: (document.getElementById('email').value||'').trim(),
+        notes: (document.getElementById('notes').value||'').trim(),
+        currency: 'PKR',
+        totals: { currency:'PKR', amount: grandTotal },
+
+        teams: teams.map(t=>({
+          teamName: t.teamName,
+          category: {
+            id: t.category.id,
+            title: t.category.title,
+            fee: Number(t.category.fee||0)
+          },
+          members: t.members.map(m=>({
+            name: m.name,
+            age: Number(m.age||0),
+            class: m.class,
+            cnic: m.cnic
+          })),
+          total: Number(t.total||0)
+        })),
+
+        payment: {
+          provider: 'bank',
+          method: 'hosted_checkout',
+          status: 'pending'
+        },
+        source: 'bulk_registration_form',
+        createdAt: serverTimestamp()
+      };
+
+      try{
+        const ref = await addDoc(collection(db,'registrations'), payload);
+
+        generateRegistrationSlip(ref.id, payload);
+
+        showStatus(
+          'success',
+          'Registration Submitted',
+          `
+            <p>Your institute registration has been successfully submitted.</p>
+            <p><strong>Reference ID:</strong> ${ref.id}</p>
+
+            <hr>
+
+            <p class="mb-1"><strong>Next Step – Payment Confirmation</strong></p>
+            <ul>
+              <li>Send <strong>payment proof screenshot</strong> on WhatsApp</li>
+              <li>Include your <strong>Reference ID</strong></li>
+            </ul>
+
+            <p class="mt-2">
+              📱 <strong>WhatsApp:</strong>
+              <a href="https://wa.me/923XXXXXXXXX" target="_blank">
+                +92 3XX XXXXXXX
+              </a>
+            </p>
+
+            <p class="muted">Your registration status will remain <strong>Pending</strong> until payment is verified.</p>
+          `
+        );
+
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 4000);
+
+      }catch(err){
+        console.error(err);
+        showStatus(
+          'error',
+          'Submission Failed',
+          `
+            <p>We could not submit your registration at this time.</p>
+            <p>Please try again in a few minutes or contact support.</p>
+
+            <p class="mt-2">
+              📱 WhatsApp Support:
+              <a href="https://wa.me/923XXXXXXXXX" target="_blank">
+                +92 3XX XXXXXXX
+              </a>
+            </p>
+          `
+        );
+      }
+    });
+function generateRegistrationSlip(referenceId, payload) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF("p", "mm", "a4");
+
+  // Page constants
+  const PAGE_W = 210;
+  const PAGE_H = 297;
+  const M = 14;                 // margin
+  const RIGHT = PAGE_W - M;
+  const LINE_H = 5;
+
+  let y = 12;
+
+  // Helpers
+  const toPKR = (n) => `PKR ${Number(n || 0).toLocaleString("en-PK")}`;
+  const safe = (s) => String(s ?? "").trim() || "-";
+
+  const ensureSpace = (need = 10) => {
+    if (y + need > PAGE_H - 18) {
+      addFooter();
+      doc.addPage();
+      y = 12;
+      drawHeader(false);
+    }
+  };
+
+  const drawRoundedBox = (x, y, w, h, radius = 3) => {
+    doc.roundedRect(x, y, w, h, radius, radius);
+  };
+
+  const writeLabelValue = (label, value, x, y0, valueX = x + 35) => {
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.setTextColor(170, 195, 225);
+    doc.text(label, x, y0);
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(230, 241, 255);
+    doc.text(value, valueX, y0);
+  };
+
+  const sectionTitle = (text) => {
+    ensureSpace(12);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(12);
+    doc.setTextColor(0, 229, 255);
+    doc.text(text, M, y);
+    y += 6;
+
+    // little underline
+    doc.setDrawColor(0, 229, 255);
+    doc.setLineWidth(0.6);
+    doc.line(M, y, M + 42, y);
+    y += 6;
+  };
+
+  const addFooter = () => {
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(160, 180, 205);
+    doc.text(
+      "Note: Registration remains PENDING until payment verification by ROBOTRON team.",
+      PAGE_W / 2,
+      PAGE_H - 10,
+      { align: "center" }
+    );
+  };
+
+  const drawHeader = (firstPage = true) => {
+    // Top dark bar
+    doc.setFillColor(10, 18, 36); // deep navy
+    doc.rect(0, 0, PAGE_W, 26, "F");
+
+    // Accent line
+    doc.setFillColor(0, 229, 255);
+    doc.rect(0, 26, PAGE_W, 1.3, "F");
+
+    // Title
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(16);
+    doc.setTextColor(230, 241, 255);
+    doc.text("ROBOTRON 2026", M, 12);
+
+    doc.setFontSize(10);
+    doc.setTextColor(190, 210, 235);
+    doc.text("Institute Registration Slip", M, 19);
+
+    // Reference badge (right)
+    const badgeW = 82;
+    const badgeH = 10;
+    doc.setFillColor(108, 92, 231); // purple
+    doc.roundedRect(RIGHT - badgeW, 9, badgeW, badgeH, 3, 3, "F");
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.setTextColor(255, 255, 255);
+    doc.text(`Ref ID: ${referenceId}`, RIGHT - badgeW + 6, 15.5);
+
+    // Submitted date
+    if (firstPage) {
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9);
+      doc.setTextColor(190, 210, 235);
+      doc.text(`Generated: ${new Date().toLocaleString()}`, RIGHT, 22, { align: "right" });
+    }
+
+    // Body starts after header
+    y = 36;
+  };
+
+  // ---------- Start ----------
+  drawHeader(true);
+
+  // ---------- Institute Box ----------
+  sectionTitle("Institute Details");
+
+  ensureSpace(32);
+  doc.setDrawColor(255, 255, 255);
+  doc.setLineWidth(0.2);
+  doc.setFillColor(14, 26, 49); // card bg
+  doc.roundedRect(M, y, RIGHT - M, 32, 4, 4, "F");
+
+  const boxY = y + 8;
+  writeLabelValue("Institute Type:", safe(payload.instituteDropdown), M + 6, boxY);
+  writeLabelValue("Institute Name:", safe(payload.instituteName), M + 6, boxY + 6);
+  writeLabelValue("Contact:", safe(payload.contact), M + 6, boxY + 12);
+  writeLabelValue("Email:", safe(payload.email), M + 6, boxY + 18);
+  writeLabelValue("Notes:", safe(payload.notes), M + 6, boxY + 24);
+
+  y += 42;
+
+  // ---------- Teams ----------
+  sectionTitle("Teams & Members");
+
+  const teams = Array.isArray(payload.teams) ? payload.teams : [];
+  let grandTotal = Number(payload?.totals?.amount || 0);
+
+  if (!teams.length) {
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(230, 241, 255);
+    doc.text("No teams found in payload.", M, y);
+    y += 8;
+  }
+
+  teams.forEach((team, idx) => {
+    ensureSpace(18);
+
+    // Team header bar
+    doc.setFillColor(17, 33, 63);
+    doc.roundedRect(M, y, RIGHT - M, 10, 3, 3, "F");
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(10);
+    doc.setTextColor(230, 241, 255);
+    doc.text(`Team ${idx + 1}: ${safe(team.teamName)}`, M + 6, y + 6.7);
+
+    // Team total (right)
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 255, 157);
+    doc.text(toPKR(team.total), RIGHT - 2, y + 6.7, { align: "right" });
+
+    y += 14;
+
+    // Category line
+    const catTitle = safe(team?.category?.title);
+    const catFee = Number(team?.category?.fee || 0);
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    doc.setTextColor(200, 220, 245);
+    doc.text(`Category: ${catTitle}`, M + 2, y);
+
+    doc.setTextColor(170, 195, 225);
+    doc.text(`Fee: ${toPKR(catFee)}`, RIGHT, y, { align: "right" });
+
+    y += 6;
+
+    // Members table header
+    ensureSpace(20);
+    doc.setFillColor(12, 22, 42);
+    doc.rect(M, y, RIGHT - M, 8, "F");
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.setTextColor(230, 241, 255);
+    doc.text("Member Name", M + 2, y + 5.5);
+    doc.text("Age", M + 92, y + 5.5);
+    doc.text("Class", M + 110, y + 5.5);
+    doc.text("CNIC / B-Form", RIGHT - 2, y + 5.5, { align: "right" });
+
+    y += 8;
+
+    // Members rows
+    const members = Array.isArray(team.members) ? team.members : [];
+    if (!members.length) {
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9);
+      doc.setTextColor(230, 241, 255);
+      doc.text("No members added.", M + 2, y + 5);
+      y += 10;
+    } else {
+      members.forEach((m, i) => {
+        ensureSpace(12);
+
+        // zebra row
+        if (i % 2 === 0) {
+          doc.setFillColor(11, 20, 38);
+          doc.rect(M, y, RIGHT - M, 8, "F");
+        }
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+        doc.setTextColor(230, 241, 255);
+
+        const name = safe(m.name);
+        const age = safe(m.age);
+        const cls = safe(m.class);
+        const cnic = safe(m.cnic);
+
+        // Clip name if too long
+        doc.text(name.slice(0, 34), M + 2, y + 5.5);
+        doc.text(String(age).slice(0, 6), M + 92, y + 5.5);
+        doc.text(String(cls).slice(0, 10), M + 110, y + 5.5);
+        doc.text(String(cnic).slice(0, 22), RIGHT - 2, y + 5.5, { align: "right" });
+
+        y += 8;
+      });
+    }
+
+    // Divider
+    y += 4;
+    doc.setDrawColor(255, 255, 255);
+    doc.setLineWidth(0.15);
+    doc.line(M, y, RIGHT, y);
+    y += 8;
+  });
+
+  // ---------- Grand Total + Bank Box ----------
+  sectionTitle("Payment Details");
+
+  ensureSpace(48);
+
+  // Total highlight box
+  doc.setFillColor(108, 92, 231);
+  doc.roundedRect(M, y, RIGHT - M, 14, 4, 4, "F");
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(12);
+  doc.setTextColor(255, 255, 255);
+  doc.text("Grand Total:", M + 6, y + 9);
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(12);
+  doc.setTextColor(0, 255, 157);
+  doc.text(toPKR(grandTotal), RIGHT - 6, y + 9, { align: "right" });
+
+  y += 20;
+
+  // Bank details box
+  doc.setFillColor(14, 26, 49);
+  doc.roundedRect(M, y, RIGHT - M, 26, 4, 4, "F");
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(10);
+  doc.setTextColor(0, 229, 255);
+  doc.text("Meezan Bank Account Details", M + 6, y + 8);
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
+  doc.setTextColor(230, 241, 255);
+  doc.text("Title: The Lab School", M + 6, y + 14);
+  doc.text("Account #: 01560106757671", M + 6, y + 19);
+  doc.text("IBAN: PK05MEZN0001560106757671", M + 6, y + 24);
+
+  y += 34;
+
+  // ---------- WhatsApp note ----------
+  ensureSpace(18);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
+  doc.setTextColor(200, 220, 245);
+  doc.text("Next Step:", M, y); y += 6;
+  doc.setTextColor(230, 241, 255);
+  doc.text("Send payment proof screenshot on WhatsApp and mention your Reference ID.", M, y);
+
+  // Footer on last page
+  addFooter();
+
+  // Auto download
+  doc.save(`ROBOTRON_2026_Registration_${referenceId}.pdf`);
+}
+
+  </script>
+
+</body>
+</html>

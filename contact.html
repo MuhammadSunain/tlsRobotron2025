@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROBOTRON 2026 — Contact</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Font Awesome 4.7 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Roboto:wght@300;400;500;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- AOS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-0: #070b16;
+      --bg-1: #0b1426;
+      --bg-2: #0f1b33;
+      --txt: #e6f1ff;
+      --muted: #9fb3c8;
+      --primary: #6c5ce7;
+      --primary-2: #00e5ff;
+      --accent: #00ff9d;
+      --glass: rgba(255, 255, 255, .06);
+      --glass-strong: rgba(255, 255, 255, .09);
+      --grad-1: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 50%, var(--accent) 100%);
+      --border-grad: linear-gradient(90deg, var(--primary-2), var(--primary), var(--accent));
+      --card-shadow: 0 8px 30px rgba(0, 0, 0, .35);
+    }
+
+    * { box-sizing: border-box }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      color: var(--txt);
+      background: var(--bg-0);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* subtle energy + grid */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -3;
+      background:
+        radial-gradient(900px 500px at 80% -100px, rgba(108, 92, 231, .28), transparent 60%),
+        radial-gradient(800px 480px at -10% 120%, rgba(0, 229, 255, .22), transparent 60%);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      opacity: .05;
+      pointer-events: none;
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, .06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, .06) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: move 40s linear infinite;
+    }
+
+    @keyframes move { from { transform: translateY(0) } to { transform: translateY(40px) } }
+
+    h1, h2, h3, h4 { font-family: 'Orbitron', sans-serif }
+
+    /* Navbar (same) */
+    .navbar {
+      background: rgba(7, 11, 22, .75);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+    }
+
+    .navbar-brand {
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      color: #fff !important;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+
+    .brand-accent {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: var(--border-grad);
+      box-shadow: 0 0 18px rgba(0, 229, 255, .35);
+    }
+
+ .nav-link{ position:relative; color:#dfeaff !important; opacity:.9;     font-weight: 600;
+    margin: 0 7px; }    .nav-link i { margin-right: .35rem }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0;
+      height: 2px;
+      background: var(--border-grad);
+      transition: width .25s ease;
+    }
+
+    .nav-link:hover::after { width: 100% }
+
+    /* Page header band */
+    .page-hero {
+      padding: 90px 0 40px;
+      background: radial-gradient(1200px 380px at 50% -120px, rgba(108, 92, 231, .35), transparent 60%);
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, .07);
+      position: relative;
+      z-index: 1;
+    }
+
+    .title-underline {
+      width: 88px;
+      height: 3px;
+      margin: 12px auto 0;
+      background: var(--border-grad);
+      border-radius: 999px;
+      box-shadow: 0 0 20px rgba(0, 229, 255, .35);
+    }
+
+    /* Section */
+    .section {
+      padding: 40px 0 80px;
+      background: var(--bg-1);
+      border-bottom: 1px solid rgba(255, 255, 255, .07);
+      /* position: relative; */
+      z-index: -1;
+    }
+
+    .glass-card {
+      background: var(--glass);
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 24px;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, .45);
+    }
+
+    /* Left contact info */
+    .contact-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .07);
+    }
+
+    .contact-item:last-child { border-bottom: 0 }
+
+    .ci-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(108, 92, 231, .12);
+      color: #cdb9ff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
+      flex: 0 0 auto;
+    }
+
+    .ci-title { font-weight: 700; color: #dfeaff; margin: 0 }
+    .ci-sub { color: var(--muted); margin: 2px 0 0; font-size: .95rem }
+
+    /* Form */
+    .form-wrap { padding: 26px }
+
+    .form-head { margin-bottom: 16px }
+    .form-head h4 { margin: 0 0 6px }
+    .form-head .muted { color: var(--muted) }
+
+    .form-label {
+      color: #d9e9ff;
+      text-transform: uppercase;
+      font-size: .85rem;
+      letter-spacing: .8px
+    }
+
+    .form-control,
+    .form-textarea {
+      background: #0e1a31;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 10px;
+      padding: 10px 12px;
+      width: 100%;
+    }
+
+    .form-control:focus,
+    .form-textarea:focus {
+      outline: none;
+      box-shadow: 0 0 0 .25rem rgba(0, 229, 255, .15);
+      border-color: #00e5ff;
+      background: #0f1f3a;
+    }
+
+    .form-textarea { min-height: 160px; resize: vertical }
+
+    .btn-primary {
+      background: var(--border-grad);
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 24px;
+      font-weight: 700;
+      box-shadow: 0 10px 30px rgba(0, 229, 255, .18);
+    }
+
+    footer {
+      background: #060a13;
+      color: #9fb3c8;
+      padding: 26px 0;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Optional map */
+    .map-embed {
+      border: 0;
+      width: 100%;
+      height: 280px;
+      border-radius: 16px;
+      filter: grayscale(20%) contrast(110%) brightness(95%);
+    }
+
+    /* ------------------ Bubble Animation (Global) ------------------ */
+    .bubble-layer {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1; /* behind content, above background grid */
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -120px;
+      border-radius: 999px;
+      filter: blur(.2px);
+      opacity: .55;
+      animation-name: floatUp;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      will-change: transform;
+      mix-blend-mode: screen;
+    }
+
+    @keyframes floatUp {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(0, -120vh, 0); }
+    }
+      .navbar-brand img {
+      width: 160px;
+      filter: drop-shadow(0 10px 24px rgba(0, 0, 0, .45));
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Bubble background layer -->
+  <div class="bubble-layer" id="bubbleLayer" aria-hidden="true"></div>
+
+  <!-- NAVBAR -->
+   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="robotronlogo.png" alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link " href="index.html"> Home</a></li>
+          <li class="nav-item"><a class="nav-link " href="team.html"> Team</a></li>
+          <li class="nav-item"><a class="nav-link" href="categories.html"> Categories</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="gallery.html"> Gallery</a></li>
+          <li class="nav-item"><a class="nav-link active" href="contact.html"> Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="page-hero">
+    <div class="container" data-aos="fade-up" data-aos-duration="900">
+      <h2>Contact Form</h2>
+      <div class="title-underline"></div>
+    </div>
+  </header>
+
+  <!-- CONTACT SECTION -->
+  <section class="section">
+    <div class="container">
+      <div class="row g-4">
+
+        <!-- Left: contact info -->
+        <div class="col-lg-4" data-aos="fade-right" data-aos-duration="900">
+          <div class="glass-card p-4 h-100">
+            <div class="contact-item">
+              <div class="ci-icon"><i class="fa fa-headphones"></i></div>
+              <div>
+                <p class="ci-title">+92 345 3468881</p>
+                <p class="ci-sub">Call us: Mon – Fri 8:00 – 3:00</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="ci-icon"><i class="fa fa-map-marker"></i></div>
+              <div>
+                <p class="ci-title">Karachi</p>
+                <p class="ci-sub">North Nazimabad Block N, Karachi</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="ci-icon"><i class="fa fa-question-circle"></i></div>
+              <div>
+                <p class="ci-title">robotron@thelabschool.pk</p>
+                <p class="ci-sub">Email us for any kind of help.</p>
+              </div>
+            </div>
+
+            <!-- Optional map embed (remove if not needed) -->
+            <div class="mt-3" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="100">
+              <iframe class="map-embed"
+                src="https://www.google.com/maps?q=North%20Nazimabad%20Block%20N%20Karachi&output=embed" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: form -->
+        <div class="col-lg-8" data-aos="fade-left" data-aos-duration="900">
+          <div class="glass-card form-wrap">
+            <div class="form-head" data-aos="fade-up" data-aos-duration="800">
+              <h4>Make an online enquiry</h4>
+              <p class="muted">Fill the form for any help</p>
+            </div>
+
+            <form id="contactForm" novalidate data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
+              <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" id="cName" required>
+                <div class="invalid-feedback">Please enter your name.</div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" id="cEmail" required>
+                <div class="invalid-feedback">Please enter a valid email.</div>
+              </div>
+              <div class="mb-4">
+                <label class="form-label">Message</label>
+                <textarea class="form-textarea" id="cMessage" required></textarea>
+                <div class="invalid-feedback">Please type your message.</div>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100">
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div><!-- /row -->
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container" data-aos="fade-up" data-aos-duration="800">
+      <p>&copy; 2025 Robotron. Made By SRET</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp }
+      from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyChGwuGwBV4_n_eK8JUCBOLeshcqKEsgAo",
+      authDomain: "robtron3-d77fe.firebaseapp.com",
+      projectId: "robtron3-d77fe",
+      storageBucket: "robtron3-d77fe.firebasestorage.app",
+      messagingSenderId: "1058046235994",
+      appId: "1:1058046235994:web:0ebc43e531ac14195a0f63",
+      measurementId: "G-96ETYYF7HR"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // AOS init
+    AOS.init({
+      duration: 900,
+      once: true,
+      offset: 60
+    });
+
+    // ---------------- Bubble Generator ----------------
+    const bubbleLayer = document.getElementById('bubbleLayer');
+
+    const bubbleColors = [
+      'rgba(0,229,255,.55)',   // cyan
+      'rgba(108,92,231,.55)',  // purple
+      'rgba(0,255,157,.45)',   // green
+      'rgba(255,77,109,.35)',  // pink-ish
+      'rgba(255,255,255,.22)'  // white glow
+    ];
+
+    function rand(min, max) { return Math.random() * (max - min) + min; }
+    function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+    function createBubble() {
+      const b = document.createElement('span');
+      b.className = 'bubble';
+
+      const size = rand(8, 46); // px
+      b.style.width = `${size}px`;
+      b.style.height = `${size}px`;
+
+      b.style.left = `${rand(0, 100)}%`;
+
+      // animation duration + delay
+      const dur = rand(10, 28); // seconds
+      const delay = rand(0, 8);
+      b.style.animationDuration = `${dur}s`;
+      b.style.animationDelay = `${delay}s`;
+
+      // slight horizontal drift with transform using CSS variable trick
+      const drift = rand(-40, 40);
+      b.style.setProperty('--drift', `${drift}px`);
+
+      // color + glow
+      const col = pick(bubbleColors);
+      b.style.background = `radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), ${col} 55%, rgba(0,0,0,0) 75%)`;
+      b.style.boxShadow = `0 0 ${rand(8, 22)}px ${col}`;
+
+      // override animation to include drift
+      b.animate([
+        { transform: `translate3d(0, 0, 0)` },
+        { transform: `translate3d(${drift}px, -120vh, 0)` }
+      ], {
+        duration: dur * 1000,
+        delay: delay * 1000,
+        iterations: Infinity
+      });
+
+      bubbleLayer.appendChild(b);
+
+      // keep DOM light
+      setTimeout(() => { b.remove(); }, (dur + delay) * 1000);
+    }
+
+    // initial bubbles
+    for (let i = 0; i < 26; i++) createBubble();
+    // continuous creation
+    setInterval(createBubble, 650);
+
+    // ---------------- Submit handler ----------------
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.classList.add('was-validated'); return; }
+
+      const payload = {
+        name: document.getElementById('cName').value.trim(),
+        email: document.getElementById('cEmail').value.trim(),
+        message: document.getElementById('cMessage').value.trim(),
+        source: 'contact_form',
+        createdAt: serverTimestamp()
+      };
+
+      try {
+        await addDoc(collection(db, 'contact_enquiries'), payload);
+        alert('Your Enquiry has been sent. You will recieve a message soon.');
+        form.reset(); form.classList.remove('was-validated');
+      } catch (err) {
+        console.error('addDoc error:', err.code, err.message, err);
+        alert(`Save failed: ${err.code || ''} ${err.message || ''}`);
+      }
+    });
+  </script>
+
+</body>
+
+</html>

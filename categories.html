@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ROBOTRON 2026 — Categories</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Font Awesome 4.7 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --bg-0:#070b16;
+      --bg-1:#0b1426;
+      --bg-2:#0f1b33;
+
+      --txt:#e6f1ff;
+      --muted:#9fb3c8;
+
+      --primary:#6c5ce7;     /* purple */
+      --primary-2:#00e5ff;   /* cyan */
+      --accent:#00ff9d;      /* green */
+
+      --glass:rgba(255,255,255,.06);
+      --glass-strong:rgba(255,255,255,.10);
+
+      --border-grad: linear-gradient(90deg,var(--primary-2),var(--primary),var(--accent));
+            --border-grad: linear-gradient(90deg, #00e5ff, #6c5ce7, #00ff9d);
+
+      --card-shadow: 0 14px 40px rgba(0,0,0,.38);
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      font-family:'Roboto',sans-serif;
+      color:var(--txt);
+      background:var(--bg-0);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    /* Background glows + grid */
+    body::before{
+      content:"";
+      position:fixed; inset:0; z-index:-3; pointer-events:none;
+      background:
+        radial-gradient(900px 520px at 80% -100px, rgba(108,92,231,.28), transparent 60%),
+        radial-gradient(800px 480px at -10% 120%, rgba(0,229,255,.22), transparent 60%),
+        radial-gradient(700px 520px at 110% 70%, rgba(0,255,157,.10), transparent 55%);
+    }
+    body::after{
+      content:"";
+      position:fixed; inset:0; z-index:-2; pointer-events:none;
+      opacity:.05;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size:40px 40px;
+      animation: gridMove 40s linear infinite;
+    }
+    @keyframes gridMove { from{ transform:translateY(0) } to{ transform:translateY(40px) } }
+
+    h1,h2,h3,h4{ font-family:'Orbitron',sans-serif; }
+
+    /* NAV */
+    .navbar{
+      background: rgba(7,11,22,.72);
+      backdrop-filter: blur(12px);
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .navbar-brand{
+      font-weight:800;
+      letter-spacing:1.2px;
+      color:#fff !important;
+      display:flex;
+      align-items:center;
+      gap:.6rem;
+    }
+    .brand-accent{
+      width:26px;height:26px;border-radius:6px;
+      background:var(--border-grad);
+      box-shadow:0 0 18px rgba(0,229,255,.35);
+    }
+ .nav-link{ position:relative; color:#dfeaff !important; opacity:.9;     font-weight: 600;
+    margin: 0 7px; }    .nav-link i{ margin-right:.35rem; }
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      left:0; bottom:-6px;
+      width:0; height:2px;
+      background:var(--border-grad);
+      transition:width .25s ease;
+    }
+    .nav-link:hover::after{ width:100%; }
+    .nav-link.active{ color:#fff !important; }
+
+    /* Sections */
+    .section{
+      padding:92px 0 70px;
+      background: linear-gradient(180deg, rgba(11,20,38,.35), rgba(15,27,51,.15));
+      border-top:1px solid rgba(255,255,255,.07);
+      border-bottom:1px solid rgba(255,255,255,.07);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:22px;
+    }
+    .title-underline{
+      width:90px;height:3px;margin:10px auto 0;
+      background:var(--border-grad);
+      border-radius:999px;
+      box-shadow:0 0 20px rgba(0,229,255,.35);
+    }
+
+    /* Glass card */
+    .glass-card{
+      background:var(--glass);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:18px;
+      box-shadow:var(--card-shadow);
+    }
+
+    /* Toolbar */
+    .toolbar{
+      padding:16px;
+      border-radius:18px;
+    }
+    .toolbar .form-control{
+      background:#0e1a31;
+      color:#fff;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:12px;
+      padding:12px 12px;
+    }
+    .toolbar .form-control:focus{
+      box-shadow:0 0 0 .25rem rgba(0,229,255,.15);
+      border-color:#00e5ff;
+      background:#0f1f3a;
+      color:#fff;
+    }
+
+    /* Buttons */
+    .btn-primary{
+      background:var(--border-grad);
+      border:0;
+      border-radius:12px;
+      padding:10px 18px;
+      font-weight:800;
+      box-shadow:0 10px 30px rgba(0,229,255,.18);
+    }
+    .btn-outline-primary{
+      border-image: var(--border-grad) 1;
+      border-width:2px;
+      border-style:solid;
+      border-radius:12px;
+      color:var(--txt);
+      font-weight:700;
+      padding:10px 16px;
+      background:transparent;
+    }
+    .btn-outline-primary:hover{
+      background: rgba(255,255,255,.06);
+      color:#fff;
+    }
+
+    /* Grid (responsive) */
+    #cardsRow{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+    @media (max-width: 991.98px){
+      #cardsRow{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 767.98px){
+      #cardsRow{ grid-template-columns: 1fr; }
+    }
+
+    /* Category card */
+    .category-card{
+      position:relative;
+      overflow:hidden;
+      border-radius:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: 0 16px 45px rgba(0,0,0,.45);
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      height:100%;
+      display:flex;
+      flex-direction:column;
+    }
+    .category-card:hover{
+      transform: translateY(-8px);
+      border-color: rgba(0,229,255,.28);
+      box-shadow: 0 22px 60px rgba(0,0,0,.62);
+    }
+
+    .card-glow{
+      position:absolute; inset:-2px;
+      background: radial-gradient(800px 260px at 30% 0%, rgba(0,229,255,.18), transparent 60%),
+                  radial-gradient(800px 260px at 70% 100%, rgba(108,92,231,.16), transparent 60%);
+      opacity:.0;
+      transition:opacity .25s ease;
+      pointer-events:none;
+    }
+    .category-card:hover .card-glow{ opacity:1; }
+
+    .category-img{
+      height:230px;
+      background:#0e1a31;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      position:relative;
+    }
+    .category-img img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transform:scale(1.02);
+      transition: transform .6s ease, filter .6s ease;
+      filter:saturate(1.05);
+    }
+    .category-card:hover .category-img img{
+      transform:scale(1.10);
+      filter:saturate(1.15);
+    }
+    .img-overlay{
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(7,11,22,.10) 0%, rgba(7,11,22,.70) 100%);
+      opacity:.85;
+      pointer-events:none;
+    }
+
+    .category-content{
+      padding:16px 16px 18px;
+      display:flex;
+      flex-direction:column;
+      flex:1;
+      position:relative;
+      z-index:2;
+    }
+    .cat-title{
+      font-size:1.1rem;
+      margin:0 0 8px;
+      letter-spacing:.2px;
+    }
+    .cat-desc{
+      color:#c9d8ea;
+      font-size:.92rem;
+      line-height:1.45;
+      min-height:44px;
+      margin:0 0 10px;
+    }
+    .category-price{
+      margin-top:auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      padding-top:10px;
+      border-top:1px solid rgba(255,255,255,.10);
+    }
+    .price-chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      background: rgba(0,255,157,.10);
+      border:1px solid rgba(0,255,157,.18);
+      color: var(--accent);
+      font-weight:900;
+      letter-spacing:.2px;
+      font-size:.92rem;
+      white-space:nowrap;
+    }
+
+    /* Empty state */
+    .empty-state{
+      text-align:center;
+      padding:34px 18px;
+      border-radius:18px;
+    }
+
+    footer{
+      background:#060a13;
+      color:#9fb3c8;
+      padding:26px 0;
+      text-align:center;
+      border-top:1px solid rgba(255,255,255,.08);
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* ---------------- BUBBLES (background animation) ---------------- */
+    .bubbles{
+      position:fixed;
+      left:0; top:0;
+      width:100%; height:100%;
+      pointer-events:none;
+      z-index:-1;
+      overflow:hidden;
+    }
+    .bubble{
+      position:absolute;
+      bottom:-120px;
+      width: var(--size);
+      height: var(--size);
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), rgba(255,255,255,0) 60%),
+                  rgba(var(--rgb), .22);
+      filter: blur(.2px);
+      box-shadow: 0 0 18px rgba(var(--rgb), .25);
+      animation: rise var(--dur) linear infinite;
+      opacity: var(--op);
+    }
+    @keyframes rise{
+      from{ transform: translateY(0) translateX(0); }
+      to{ transform: translateY(calc(-110vh)) translateX(var(--drift)); }
+    }
+      .navbar-brand img {
+      width: 160px;
+      filter: drop-shadow(0 10px 24px rgba(0, 0, 0, .45));
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Bubble layer -->
+  <div class="bubbles" id="bubbles"></div>
+
+  <!-- NAVBAR -->
+   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="robotronlogo.png" alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link " href="index.html"> Home</a></li>
+          <li class="nav-item"><a class="nav-link " href="team.html"> Team</a></li>
+          <li class="nav-item"><a class="nav-link active" href="categories.html"> Categories</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="gallery.html"> Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html"> Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CATEGORIES -->
+  <section class="section">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Competition Categories</h2>
+        <div class="title-underline"></div>
+      </div>
+
+      <div class="toolbar glass-card p-3 p-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="row g-3 align-items-center">
+          <div class="col-md-6">
+            <label class="form-label mb-1">Search</label>
+            <input id="searchBox" type="text" class="form-control" placeholder="Search categories by title/code...">
+          </div>
+          <div class="col-md-6 text-md-end">
+            <a href="registration.html" class="btn btn-outline-primary">
+              <i class="fa fa-arrow-right"></i> Go to Registration
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards -->
+      <div id="cardsRow" data-aos="fade-up" data-aos-delay="150"></div>
+
+      <!-- Empty -->
+      <div id="emptyState" class="glass-card empty-state d-none" data-aos="fade-up">
+        <h4 class="mb-2">No Categories Found</h4>
+        <div class="help-muted">Please add categories from admin panel.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p class="mb-0">&copy; 2025 Robotron. Made By SRET</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- AOS -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+  <!-- Firebase + Categories logic -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import {
+      getFirestore, collection, query, orderBy, getDocs
+    } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+    // ✅ SAME project config you used in admin.html
+    // Update here if you change Firebase project
+    const firebaseConfig = {
+      apiKey: "AIzaSyChGwuGwBV4_n_eK8JUCBOLeshcqKEsgAo",
+      authDomain: "robtron3-d77fe.firebaseapp.com",
+      projectId: "robtron3-d77fe",
+      storageBucket: "robtron3-d77fe.firebasestorage.app",
+      messagingSenderId: "1058046235994",
+      appId: "1:1058046235994:web:0ebc43e531ac14195a0f63",
+      measurementId: "G-96ETYYF7HR"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+
+    const cardsRow = document.getElementById('cardsRow');
+    const emptyState = document.getElementById('emptyState');
+    const searchBox = document.getElementById('searchBox');
+
+    let cacheCats = [];
+
+    // AOS init
+    AOS.init({
+      duration: 800,
+      once: true,
+      offset: 80
+    });
+
+    // Bubbles init
+    initBubbles();
+
+    // Load categories
+    loadCategories();
+
+    async function loadCategories(){
+      try{
+        cardsRow.innerHTML = "";
+        emptyState.classList.add("d-none");
+
+        // If your docs don't have createdAt, ordering can fail.
+        // We'll try createdAt order first; if it fails, fallback to plain getDocs.
+        let snap;
+        try{
+          const qref = query(collection(db,'categories'), orderBy('createdAt','desc'));
+          snap = await getDocs(qref);
+        }catch(e){
+          console.warn("orderBy(createdAt) failed; falling back to unordered load.", e);
+          snap = await getDocs(collection(db,'categories'));
+        }
+
+        cacheCats = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+        renderCards(cacheCats);
+      }catch(err){
+        console.error("Load categories error:", err);
+        cacheCats = [];
+        renderCards([]);
+      }
+    }
+
+    function renderCards(list){
+      if(!list || !list.length){
+        cardsRow.innerHTML = "";
+        emptyState.classList.remove("d-none");
+        return;
+      }
+
+      emptyState.classList.add("d-none");
+
+      cardsRow.innerHTML = list.map((c, idx) => cardTemplate(c, idx)).join("");
+
+      // Wire register clicks
+      cardsRow.querySelectorAll(".select-category").forEach(btn=>{
+        btn.addEventListener("click", (e)=>{
+          e.preventDefault();
+          const id = btn.getAttribute("data-id") || "";
+          const title = btn.getAttribute("data-title") || "";
+          const fee = Number(btn.getAttribute("data-fee") || 0);
+
+          localStorage.setItem("robotronSelected", JSON.stringify({ id, category: title, fee }));
+          window.location.href = "registration.html";
+        });
+      });
+
+      // refresh AOS after DOM update
+      AOS.refreshHard();
+    }
+
+    function cardTemplate(c, idx){
+      const title = (c.title || "").trim();
+      const code  = (c.code || c.id || "").trim();
+      const desc  = (c.description || "").trim();
+      const fee   = Number(c.priceRs || 0);
+      const img   = (c.imageUrl || "").trim();
+      const catType   = (c.catType || "").trim();
+      const rulebooklink   = (c.rulebooklink || "").trim();
+
+      // fallback image if missing
+      const fallbackImg = "https://images.unsplash.com/photo-1581093450021-4a7360e9a3c3?q=80&w=1400&auto=format&fit=crop";
+
+      // AOS stagger
+      const delay = 80 + (idx % 6) * 70;
+
+      return `
+        <div class="category-card" data-name="${escapeAttr((title + " " + code).toLowerCase())}"
+             data-aos="zoom-in" data-aos-delay="${delay}">
+          <span class="card-glow"></span>
+
+          <div class="category-img">
+            <img src="${escapeAttr(img || fallbackImg)}" alt="${escapeAttr(title)}" loading="lazy">
+            <div class="img-overlay"></div>
+          </div>
+
+          <div class="category-content">
+            <h3 class="cat-title">${escapeHTML(title || "Untitled Category")}</h3>
+            <h3 style="font-size: 14px;" class="cat-title">Category Type : ${escapeHTML(catType || "Untitled Category")}</h3>
+            <h3 style="font-size: 14px;" class="cat-title"> <a href="${rulebooklink}">Rule Book</a> </h3>
+
+            <div class="category-price">
+              <div class="price-chip"><i class="fa fa-tag"></i> ₨ ${fee.toLocaleString('en-PK')}</div>
+              <a href="registration.html"
+                 class="btn btn-outline-primary select-category"
+                 data-id="${escapeAttr(c.id || '')}"
+                 data-title="${escapeAttr(title)}"
+                 data-fee="${escapeAttr(String(fee))}">
+                Register <i class="fa fa-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Search
+    searchBox.addEventListener("input", ()=>{
+      const q = (searchBox.value || "").toLowerCase().trim();
+      const filtered = cacheCats.filter(c=>{
+        const hay = `${c.title||''} ${c.code||c.id||''}`.toLowerCase();
+        return hay.includes(q);
+      });
+      renderCards(filtered);
+    });
+
+    // Utils
+    function escapeHTML(s){
+      return String(s||'').replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
+    }
+    function escapeAttr(s){
+      return String(s||'').replace(/"/g,'&quot;');
+    }
+
+    // Bubbles: random positions + colors, continuous rise
+    function initBubbles(){
+      const wrap = document.getElementById("bubbles");
+      if(!wrap) return;
+
+      // tweak for density
+      const COUNT = 18;
+
+      const colors = [
+        "108,92,231",  // purple
+        "0,229,255",   // cyan
+        "0,255,157",   // green
+        "255,0,150",   // pinkish accent (optional)
+      ];
+
+      wrap.innerHTML = "";
+
+      for(let i=0; i<COUNT; i++){
+        const b = document.createElement("div");
+        b.className = "bubble";
+
+        const size = rand(10, 60);
+        const left = rand(0, 100);
+        const dur  = rand(10, 26);
+        const op   = rand(0.12, 0.40);
+        const drift= rand(-40, 40) + "px";
+        const rgb  = colors[Math.floor(Math.random()*colors.length)];
+
+        b.style.setProperty("--size", size + "px");
+        b.style.setProperty("--dur", dur + "s");
+        b.style.setProperty("--op", op);
+        b.style.setProperty("--drift", drift);
+        b.style.setProperty("--rgb", rgb);
+
+        b.style.left = left + "%";
+        b.style.animationDelay = (-1 * rand(0, dur)) + "s"; // so they start mid-way
+
+        wrap.appendChild(b);
+      }
+    }
+
+    function rand(min, max){
+      return Math.random() * (max - min) + min;
+    }
+  </script>
+</body>
+</html>

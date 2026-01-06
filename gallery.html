@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ROBOTRON — Gallery</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Font Awesome 4.7 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+
+  <!-- AOS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+
+  <style>
+    :root{
+      /* Tech / Robotics theme (consistent dark neon) */
+      --bg-0:#070A14;
+      --bg-1:#0B1026;
+      --bg-2:#0E1A33;
+
+      --txt:#EAF2FF;
+      --muted:#9FB3C8;
+
+      --p1:#6C5CE7;      /* purple */
+      --p2:#00E5FF;      /* cyan */
+      --p3:#00FF9D;      /* green */
+      --p4:#FF4DFF;      /* magenta */
+
+      --glass:rgba(255,255,255,.06);
+      --glass-strong:rgba(255,255,255,.09);
+
+      --border:rgba(255,255,255,.12);
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+
+      --border-grad: linear-gradient(90deg,var(--p2),var(--p1),var(--p3));
+      --border-grad-2: linear-gradient(90deg,var(--p4),var(--p2),var(--p1));
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      font-family:'Roboto',sans-serif;
+      color:var(--txt);
+      background: radial-gradient(1200px 600px at 70% -200px, rgba(108,92,231,.35), transparent 60%),
+                  radial-gradient(1000px 520px at 10% 120%, rgba(0,229,255,.22), transparent 60%),
+                  linear-gradient(180deg, var(--bg-0), var(--bg-1));
+      min-height:100vh;
+      overflow-x:hidden;
+      position:relative;
+    }
+
+    /* Subtle grid overlay */
+    body::after{
+      content:"";
+      position:fixed; inset:0;
+      z-index:-2;
+      pointer-events:none;
+      opacity:.07;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size:42px 42px;
+      animation:gridMove 40s linear infinite;
+    }
+    @keyframes gridMove{
+      from{ transform:translateY(0) }
+      to{ transform:translateY(42px) }
+    }
+
+    h1,h2,h3,h4,h5{ font-family:'Orbitron',sans-serif; }
+
+    /* HEADER */
+    .navbar{
+      background: rgba(7,10,20,.72);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .navbar-brand{
+      font-weight:900; letter-spacing:1.2px;
+      color:#fff !important;
+      display:flex; align-items:center; gap:.6rem;
+    }
+    .brand-accent{
+      width:26px;height:26px;border-radius:7px;
+      background: var(--border-grad);
+      box-shadow: 0 0 20px rgba(0,229,255,.35);
+      position:relative;
+    }
+    .brand-accent::after{
+      content:"";
+      position:absolute; inset:-2px;
+      border-radius:9px;
+      background: var(--border-grad-2);
+      opacity:.22;
+      filter: blur(10px);
+      z-index:-1;
+    }
+
+   .nav-link{ position:relative; color:#dfeaff !important; opacity:.9;     font-weight: 600;
+    margin: 0 7px; }
+    .nav-link:hover{ opacity:1 }
+    .nav-link i{ margin-right:.35rem }
+    .nav-link::after{
+      content:"";
+      position:absolute; left:0; bottom:-8px;
+      width:0; height:2px;
+      background:var(--border-grad);
+      transition:width .25s ease;
+      border-radius:999px;
+    }
+    .nav-link:hover::after{ width:100% }
+    .nav-link.active{ opacity:1 }
+    .nav-link.active::after{ width:100% }
+
+    /* Common UI */
+    .glass-card{
+      background: var(--glass);
+      border:1px solid var(--border);
+      border-radius:18px;
+      box-shadow: var(--shadow);
+    }
+    .btn-primary{
+      background: var(--border-grad);
+      border:0;
+      border-radius:12px;
+      font-weight:900;
+      letter-spacing:.3px;
+    }
+    .btn-outline-light{
+      border-color: rgba(255,255,255,.25);
+      color:#e6f1ff;
+      border-radius:12px;
+    }
+    .pill{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.15);
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:.8rem;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+    }
+    .help-muted{ color: var(--muted); font-size:.92rem; }
+    .hidden{ display:none !important; }
+
+    footer{
+      background: rgba(6,10,19,.9);
+      border-top: 1px solid rgba(255,255,255,.08);
+      color:#9fb3c8;
+      padding:26px 0;
+      text-align:center;
+      margin-top:40px;
+      position:relative;
+      z-index:2;
+    }
+
+    /* BUBBLES LAYER */
+    .bubble-layer{
+      position:fixed;
+      inset:0;
+      z-index:-1; /* behind content but above background overlays */
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .bubble{
+      position:absolute;
+      bottom:-120px;
+      width:18px;
+      height:18px;
+      border-radius:999px;
+      opacity:.25;
+      filter: blur(.2px);
+      animation: bubbleUp linear infinite;
+      box-shadow: 0 0 22px rgba(0,229,255,.12);
+    }
+    @keyframes bubbleUp{
+      from{
+        transform: translateY(0) translateX(0) scale(1);
+        opacity:.15;
+      }
+      10%{ opacity:.35; }
+      to{
+        transform: translateY(-120vh) translateX(30px) scale(1.08);
+        opacity:0;
+      }
+    }
+
+    /* Page header */
+    .page-hero{
+      margin-top:24px;
+      background: linear-gradient(180deg, rgba(11,16,38,.78), rgba(15,27,51,.58));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:20px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .page-hero::before{
+      content:"";
+      position:absolute; inset:-1px;
+      background:
+        radial-gradient(700px 280px at 18% -40px, rgba(0,229,255,.28), transparent 60%),
+        radial-gradient(740px 320px at 92% 120%, rgba(0,255,157,.16), transparent 60%),
+        radial-gradient(700px 300px at 60% 10%, rgba(255,77,255,.12), transparent 60%);
+      pointer-events:none;
+      z-index:0;
+    }
+    .page-hero .inner{ position:relative; z-index:1; padding:26px 22px; }
+    .hero-title{ margin:0; font-weight:900; letter-spacing:.8px; }
+    .hero-sub{ margin-top:8px; max-width:880px; }
+
+    /* Toolbar */
+    .toolbar{
+      margin-top:14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .search-wrap .form-control{
+      background:#0e1a31;
+      color:#fff;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:12px;
+      padding:10px 12px;
+    }
+    .search-wrap .form-control:focus{
+      box-shadow:0 0 0 .25rem rgba(0,229,255,.15);
+      border-color:#00e5ff;
+      background:#0f1f3a;
+      color:#fff;
+    }
+
+    .chipbar{ display:flex; gap:8px; flex-wrap:wrap; }
+    .chip{
+      cursor:pointer;
+      user-select:none;
+      padding:7px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      color: #e6f1ff;
+      font-size:.9rem;
+      transition: transform .12s ease, background .2s ease, border-color .2s ease;
+    }
+    .chip:hover{ transform: translateY(-1px); background: rgba(255,255,255,.06); }
+    .chip.active{
+      background: rgba(0,229,255,.10);
+      border-color: rgba(0,229,255,.35);
+      box-shadow: 0 0 0 .15rem rgba(0,229,255,.10);
+    }
+
+    /* Gallery grid */
+    .gallery-grid{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap:14px;
+    }
+
+    .g-card{
+      overflow:hidden;
+      cursor:pointer;
+      position:relative;
+      transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .g-card:hover{
+      transform: translateY(-3px);
+      border-color: rgba(0,229,255,.26);
+      box-shadow: 0 24px 80px rgba(0,0,0,.5);
+    }
+    .g-card::before{
+      content:"";
+      position:absolute; inset:-1px;
+      background: var(--border-grad-2);
+      opacity:0;
+      filter: blur(18px);
+      transition: opacity .22s ease;
+      z-index:0;
+      pointer-events:none;
+    }
+    .g-card:hover::before{ opacity:.22; }
+
+    .g-media{
+      height:170px;
+      background:#0e1a31;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      position:relative;
+      overflow:hidden;
+      z-index:1;
+    }
+    .g-media img, .g-media video{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+      transform: scale(1);
+      transition: transform .35s ease;
+    }
+    .g-card:hover .g-media img,
+    .g-card:hover .g-media video{
+      transform: scale(1.05);
+    }
+
+    .g-badge{
+      position:absolute; top:10px; left:10px;
+      background: rgba(7,10,20,.65);
+      border:1px solid rgba(255,255,255,.14);
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:.78rem;
+      color:#dff6ff;
+      backdrop-filter: blur(10px);
+      z-index: 2;
+    }
+
+    .g-play{
+      position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      pointer-events:none;
+      z-index: 1;
+    }
+    .g-play i{
+      width:58px; height:58px;
+      border-radius:50%;
+      background: rgba(0,229,255,.14);
+      border:1px solid rgba(0,229,255,.30);
+      display:flex; align-items:center; justify-content:center;
+      font-size:22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    .g-body{ padding:12px 12px 14px; position:relative; z-index:1; }
+    .g-title{ margin:0; font-weight:900; font-size:1.02rem; }
+    .g-meta{ margin-top:4px; color:var(--muted); font-size:.86rem; }
+    .g-desc{ margin-top:8px; color:#c9d8ea; font-size:.92rem; min-height:42px; }
+
+    .empty{
+      margin-top:16px;
+      padding:26px;
+      text-align:center;
+    }
+
+    .loadmore-wrap{
+      margin-top:16px;
+      display:flex;
+      justify-content:center;
+    }
+      .navbar-brand img {
+      width: 160px;
+      filter: drop-shadow(0 10px 24px rgba(0, 0, 0, .45));
+    }
+
+    /* Lightbox modal */
+    .modal-content{
+      background: linear-gradient(180deg, rgba(11,20,38,.95), rgba(15,27,51,.95));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:18px;
+      color:var(--txt);
+    }
+    .modal-header, .modal-footer{ border-color: rgba(255,255,255,.10); }
+    .btn-close.btn-close-white{ filter: invert(1) grayscale(100%); }
+    .viewer{
+      background:#0e1a31;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:14px;
+      overflow:hidden;
+      height: 60vh;
+      min-height: 320px;
+    }
+    .viewer img, .viewer video{
+      width:100%; height:100%;
+      border:0;
+      object-fit:contain;
+      background:#000;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- bubbles -->
+  <div class="bubble-layer" id="bubbleLayer" aria-hidden="true"></div>
+
+  <!-- HEADER -->
+   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="robotronlogo.png" alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link " href="index.html"> Home</a></li>
+          <li class="nav-item"><a class="nav-link " href="team.html"> Team</a></li>
+          <li class="nav-item"><a class="nav-link " href="categories.html"> Categories</a>
+          </li>
+          <li class="nav-item"><a class="nav-link active" href="gallery.html"> Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html"> Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container" style="max-width:1200px; padding:18px 12px 10px; margin-top: 76px; position:relative; z-index:2;">
+    <!-- HERO -->
+    <section class="page-hero" data-aos="fade-up" data-aos-duration="800">
+      <div class="inner">
+        <div class="d-flex flex-wrap justify-content-between align-items-start gap-2">
+          <div data-aos="fade-right" data-aos-delay="50">
+            <!-- <div class="pill d-inline-block"><i class="fa fa-photo"></i> GALLERY</div> -->
+            <h2 class="hero-title mt-2">Moments, Highlights & Media</h2>
+            <!-- <p class="help-muted hero-sub mb-0">
+              Images and videos are loaded automatically from your Google Drive folder.
+              Use search and filters to quickly find media.
+            </p> -->
+          </div>
+          <div class="d-flex gap-2 flex-wrap" data-aos="fade-left" data-aos-delay="120">
+            <span class="pill" id="driveStatus"><i class="fa fa-cloud"></i> Connecting to Google Drive…</span>
+          </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar" data-aos="fade-up" data-aos-delay="160">
+          <div class="search-wrap" style="flex:1; min-width:260px;">
+            <input id="searchInput" class="form-control" placeholder="Search by name, type…" />
+          </div>
+
+          <div class="chipbar">
+            <div class="chip active" data-filter="all"><i class="fa fa-th"></i> All</div>
+            <div class="chip" data-filter="image"><i class="fa fa-picture-o"></i> Images</div>
+            <div class="chip" data-filter="video"><i class="fa fa-film"></i> Videos</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY GRID -->
+    <section class="mt-3">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2" data-aos="fade-up" data-aos-delay="120">
+        <div class="help-muted">
+          Showing: <b id="countShown">0</b> / <b id="countTotal">0</b>
+        </div>
+        <!-- <div class="help-muted">
+          Tip: Click any card to open preview.
+        </div> -->
+      </div>
+
+      <div id="galleryGrid" class="gallery-grid"></div>
+
+      <div id="emptyState" class="glass-card empty hidden" data-aos="zoom-in" data-aos-delay="120">
+        <h4 class="mb-2">No Media Found</h4>
+        <div class="help-muted">Try different filters/search, or check your Drive folder permissions.</div>
+      </div>
+
+      <div class="loadmore-wrap" data-aos="fade-up" data-aos-delay="120">
+        <button id="btnLoadMore" class="btn btn-primary hidden">
+          <i class="fa fa-plus"></i> Show More..
+        </button>
+      </div>
+
+      <div class="text-center mt-3" data-aos="fade-up" data-aos-delay="180">
+        <div id="loadHint" class="help-muted"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Robotron. Made By SRET</p>
+    </div>
+  </footer>
+
+  <!-- VIEWER MODAL -->
+  <div class="modal fade" id="viewerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h5 id="viewerTitle" class="modal-title mb-0">Preview</h5>
+            <div id="viewerMeta" class="help-muted" style="margin-top:4px;"></div>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <div id="viewerBox" class="viewer"></div>
+          <div id="viewerDesc" class="help-muted mt-3"></div>
+        </div>
+
+        <div class="modal-footer">
+          <a id="btnOpenSource" class="btn btn-outline-light" href="#" target="_blank" rel="noopener">
+            <i class="fa fa-external-link"></i> Open in Drive
+          </a>
+          <button class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- AOS -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+    /******************************************************************
+     * GOOGLE DRIVE SETTINGS (UPDATE THESE)
+     ******************************************************************/
+    const DRIVE_API_KEY = "AIzaSyDHXLLv8M_nmLXRCjazbJWhrYU4_4bMI9M";
+    const DRIVE_FOLDER_ID = "1rnVf2bAc1Z1IBsaJUVGuNqaOXL__7zRm";
+
+    /******************************************************************
+     * LIMITS / PAGINATION
+     ******************************************************************/
+    const DRIVE_PAGE_SIZE = 30;
+    const INITIAL_RENDER_LIMIT = 18;
+    const RENDER_STEP = 18;
+
+    /******************************************************************
+     * STATE
+     ******************************************************************/
+    let driveNextPageToken = null;
+    let driveLoadedAll = false;
+
+    let allItems = [];
+    let visibleCount = 0;
+    let currentFilter = 'all';
+
+    /******************************************************************
+     * UI REFS
+     ******************************************************************/
+    const grid = document.getElementById('galleryGrid');
+    const emptyState = document.getElementById('emptyState');
+    const searchInput = document.getElementById('searchInput');
+    const chips = Array.from(document.querySelectorAll('.chip'));
+    const countShown = document.getElementById('countShown');
+    const countTotal = document.getElementById('countTotal');
+    const btnLoadMore = document.getElementById('btnLoadMore');
+    const driveStatus = document.getElementById('driveStatus');
+    const loadHint = document.getElementById('loadHint');
+
+    const viewerModalEl = document.getElementById('viewerModal');
+    const viewerModal = new bootstrap.Modal(viewerModalEl);
+    const viewerTitle = document.getElementById('viewerTitle');
+    const viewerMeta = document.getElementById('viewerMeta');
+    const viewerBox = document.getElementById('viewerBox');
+    const viewerDesc = document.getElementById('viewerDesc');
+    const btnOpenSource = document.getElementById('btnOpenSource');
+
+    /******************************************************************
+     * GOOGLE DRIVE API HELPERS
+     ******************************************************************/
+    function buildDriveListUrl(pageToken=null){
+      const base = new URL("https://www.googleapis.com/drive/v3/files");
+      base.searchParams.set("key", DRIVE_API_KEY);
+      base.searchParams.set("q", `'${DRIVE_FOLDER_ID}' in parents and trashed=false`);
+      base.searchParams.set("pageSize", String(DRIVE_PAGE_SIZE));
+      base.searchParams.set("fields", "nextPageToken, files(id,name,mimeType,thumbnailLink,webViewLink,webContentLink,createdTime,size)");
+      base.searchParams.set("orderBy", "createdTime desc");
+      if(pageToken) base.searchParams.set("pageToken", pageToken);
+      return base.toString();
+    }
+
+    function isImage(mime){ return (mime || "").startsWith("image/"); }
+    function isVideo(mime){ return (mime || "").startsWith("video/"); }
+
+    function driveUcViewUrl(fileId){
+      return `https://drive.google.com/uc?export=view&id=${encodeURIComponent(fileId)}`;
+    }
+    function driveUcDownloadUrl(fileId){
+      return `https://drive.google.com/uc?export=download&id=${encodeURIComponent(fileId)}`;
+    }
+
+    function mapDriveFileToItem(f){
+      const type = isImage(f.mimeType) ? "image" : (isVideo(f.mimeType) ? "video" : null);
+      if(!type) return null;
+
+      const src = (type === "image") ? driveUcViewUrl(f.id) : driveUcDownloadUrl(f.id);
+
+      return {
+        id: f.id,
+        type,
+        title: f.name || (type === "image" ? "Image" : "Video"),
+        description: "",
+        src,
+        driveWebViewLink: f.webViewLink || "",
+        dateText: f.createdTime ? new Date(f.createdTime).getFullYear().toString() : "",
+        tag: type === "image" ? "Image" : "Video",
+        thumb: f.thumbnailLink || ""
+      };
+    }
+
+    async function fetchDriveBatch(){
+      if(!DRIVE_API_KEY || DRIVE_API_KEY.includes("PUT_YOUR") || !DRIVE_FOLDER_ID || DRIVE_FOLDER_ID.includes("PUT_YOUR")){
+        driveStatus.textContent = "Set Drive API Key + Folder ID";
+        driveStatus.classList.add("text-danger");
+        loadHint.textContent = "Please update DRIVE_API_KEY and DRIVE_FOLDER_ID in the code.";
+        driveLoadedAll = true;
+        updateLoadMoreButton();
+        render(true);
+        return;
+      }
+
+      try{
+        driveStatus.textContent = "--";
+        const url = buildDriveListUrl(driveNextPageToken);
+        const res = await fetch(url);
+        if(!res.ok){
+          const txt = await res.text();
+          throw new Error(`Drive API error: ${res.status} ${txt}`);
+        }
+        const data = await res.json();
+
+        driveNextPageToken = data.nextPageToken || null;
+        if(!driveNextPageToken) driveLoadedAll = true;
+
+        const files = Array.isArray(data.files) ? data.files : [];
+        const mapped = files.map(mapDriveFileToItem).filter(Boolean);
+
+        allItems.push(...mapped);
+
+        driveStatus.textContent = "--";
+        driveStatus.classList.remove("text-danger");
+
+        countTotal.textContent = String(allItems.length);
+
+        if(!allItems.length && driveLoadedAll){
+          loadHint.textContent = "No images/videos detected. Ensure files are inside the folder and are shared/public.";
+        } else {
+          loadHint.textContent = "";
+        }
+
+        updateLoadMoreButton();
+      }catch(err){
+        console.error(err);
+        driveStatus.textContent = "Drive connection failed";
+        driveStatus.classList.add("text-danger");
+        loadHint.textContent = "Check API Key, Folder ID, and that Drive API is enabled. Also ensure the folder/files are shareable.";
+        driveLoadedAll = true;
+        updateLoadMoreButton();
+      }
+    }
+
+    /******************************************************************
+     * RENDERING / FILTERS / SEARCH
+     ******************************************************************/
+    function getFilteredList(){
+      const q = (searchInput.value || '').toLowerCase().trim();
+
+      let list = [...allItems];
+
+      if(currentFilter !== 'all'){
+        list = list.filter(x => x.type === currentFilter);
+      }
+
+      if(q){
+        list = list.filter(x => {
+          const hay = `${x.title||''} ${x.tag||''} ${x.type||''} ${x.dateText||''}`.toLowerCase();
+          return hay.includes(q);
+        });
+      }
+
+      return list;
+    }
+
+    function render(resetVisible=false){
+      const list = getFilteredList();
+      countTotal.textContent = String(allItems.length);
+
+      if(resetVisible){
+        visibleCount = 0;
+      }
+
+      const toShow = list.slice(0, Math.max(visibleCount, INITIAL_RENDER_LIMIT));
+      const finalVisible = toShow.length;
+
+      countShown.textContent = String(finalVisible);
+
+      if(!finalVisible){
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        updateLoadMoreButton(list);
+        return;
+      }
+      emptyState.classList.add('hidden');
+
+      grid.innerHTML = toShow.map((x, idx) => cardHTML(x, idx)).join('');
+
+      // bind clicks
+      toShow.forEach(x => {
+        const el = document.getElementById(`card_${x.id}`);
+        if(el) el.addEventListener('click', () => openViewer(x));
+      });
+
+      visibleCount = finalVisible;
+
+      // refresh AOS for newly added elements
+      if (window.AOS) AOS.refreshHard();
+
+      updateLoadMoreButton(list);
+    }
+
+    function updateLoadMoreButton(filteredList=null){
+      const list = filteredList || getFilteredList();
+
+      const moreInFilter = visibleCount < list.length;
+      const moreInDrive = !driveLoadedAll;
+
+      btnLoadMore.classList.toggle('hidden', !(moreInFilter || moreInDrive));
+      btnLoadMore.disabled = false;
+      btnLoadMore.innerHTML = `<i class="fa fa-plus"></i> Show More..`;
+    }
+
+    function cardHTML(x, idx){
+      const badge = (x.type === 'image') ? 'Image' : 'Video';
+      const icon = (x.type === 'image') ? 'fa-picture-o' : 'fa-film';
+
+      let media = '';
+      if(x.type === 'image'){
+        const imgSrc = x.thumb || x.src;
+        media = `<img src="${esc(imgSrc)}" alt="${esc(x.title||'')}"
+                 onerror="this.src='${esc(x.src)}';">`;
+      } else {
+        if(x.thumb){
+          media = `<img src="${esc(x.thumb)}" alt="${esc(x.title||'')}" />`;
+        }else{
+          media = `
+            <div class="h-100 d-flex align-items-center justify-content-center help-muted" style="padding:12px;text-align:center;">
+              <div>
+                <div style="font-size:32px; opacity:.9;"><i class="fa ${icon}"></i></div>
+                <div class="mt-2">Video</div>
+                <div style="font-size:.85rem; opacity:.85;">Click to preview</div>
+              </div>
+            </div>
+          `;
+        }
+        media += `<div class="g-play"><i class="fa fa-play"></i></div>`;
+      }
+
+      // Staggered AOS delay for a nicer grid feel
+      const delay = Math.min(240, idx * 40);
+
+      return `
+        <div id="card_${x.id}" class="glass-card g-card"
+             data-aos="zoom-in" data-aos-delay="${delay}" data-aos-duration="650">
+          <div class="g-media">
+            <div class="g-badge"><i class="fa ${icon}"></i> ${badge}</div>
+            ${media}
+          </div>
+          <div class="g-body">
+            <div class="d-flex justify-content-between align-items-start gap-2">
+              <div>
+                <div class="g-meta">${esc(x.tag||'')} ${x.dateText ? `• ${esc(x.dateText)}` : ''}</div>
+              </div>
+              <div class="pill">${esc((x.type||'').toUpperCase())}</div>
+            </div>
+            <div class="g-desc">${esc(x.description||'')}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    /******************************************************************
+     * VIEWER
+     ******************************************************************/
+    function openViewer(x){
+      viewerTitle.textContent = x.title || 'Preview';
+      viewerMeta.textContent = `${x.tag || ''}${x.tag && x.dateText ? ' • ' : ''}${x.dateText || ''}`.trim();
+      viewerDesc.textContent = x.description || '';
+
+      const openLink = x.driveWebViewLink || `https://drive.google.com/file/d/${encodeURIComponent(x.id)}/view`;
+      btnOpenSource.href = openLink;
+      btnOpenSource.classList.toggle('hidden', !openLink);
+
+      viewerBox.innerHTML = '';
+
+      if(x.type === 'image'){
+        viewerBox.innerHTML = `<img src="${esc(x.src)}" alt="${esc(x.title||'')}" />`;
+      }else{
+        viewerBox.innerHTML = `
+          <video controls autoplay playsinline>
+            <source src="${esc(x.src)}">
+            Your browser does not support the video tag.
+          </video>
+        `;
+      }
+
+      viewerModal.show();
+    }
+
+    viewerModalEl.addEventListener('hidden.bs.modal', () => {
+      const v = viewerBox.querySelector('video');
+      if(v){
+        try { v.pause(); } catch(e){}
+      }
+      viewerBox.innerHTML = '';
+    });
+
+    /******************************************************************
+     * EVENTS
+     ******************************************************************/
+    chips.forEach(ch => {
+      ch.addEventListener('click', () => {
+        chips.forEach(x => x.classList.remove('active'));
+        ch.classList.add('active');
+        currentFilter = ch.getAttribute('data-filter') || 'all';
+        visibleCount = 0;
+        render(true);
+      });
+    });
+
+    searchInput.addEventListener('input', () => {
+      visibleCount = 0;
+      render(true);
+    });
+
+    btnLoadMore.addEventListener('click', async () => {
+      const list = getFilteredList();
+
+      if(visibleCount < list.length){
+        visibleCount = Math.min(visibleCount + RENDER_STEP, list.length);
+        render(false);
+        return;
+      }
+
+      if(!driveLoadedAll){
+        btnLoadMore.disabled = true;
+        btnLoadMore.innerHTML = `<i class="fa fa-spinner fa-spin"></i> Loading…`;
+        await fetchDriveBatch();
+
+        btnLoadMore.disabled = false;
+        btnLoadMore.innerHTML = `<i class="fa fa-plus"></i> Show More..`;
+
+        visibleCount = Math.max(visibleCount, INITIAL_RENDER_LIMIT);
+        render(false);
+      }
+    });
+
+    /******************************************************************
+     * UTILS
+     ******************************************************************/
+    function esc(s){
+      return String(s||'').replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
+    }
+
+    /******************************************************************
+     * BUBBLES (random positions + colors)
+     ******************************************************************/
+    function initBubbles(){
+      const layer = document.getElementById('bubbleLayer');
+      if(!layer) return;
+
+      const colors = [
+        'rgba(0,229,255,.55)',   // cyan
+        'rgba(108,92,231,.55)',  // purple
+        'rgba(0,255,157,.45)',   // green
+        'rgba(255,77,255,.35)',  // magenta
+        'rgba(255,255,255,.22)'  // white
+      ];
+
+      const total = 26; // you can increase/decrease
+      for(let i=0;i<total;i++){
+        const b = document.createElement('span');
+        b.className = 'bubble';
+
+        const size = rand(10, 44);
+        const left = rand(0, 100);
+        const duration = rand(10, 22);      // seconds
+        const delay = rand(0, 12);          // seconds
+        const drift = rand(-40, 40);        // px
+
+        b.style.width = size + 'px';
+        b.style.height = size + 'px';
+        b.style.left = left + 'vw';
+        b.style.animationDuration = duration + 's';
+        b.style.animationDelay = delay + 's';
+        b.style.background = colors[Math.floor(Math.random()*colors.length)];
+        b.style.boxShadow = `0 0 ${rand(12,28)}px rgba(0,229,255,.12)`;
+
+        // small horizontal drift using CSS variable
+        b.style.setProperty('--drift', drift + 'px');
+
+        // override animation to include drift more naturally
+        b.style.animationName = 'bubbleUp';
+
+        layer.appendChild(b);
+      }
+    }
+    function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+    /******************************************************************
+     * INIT
+     ******************************************************************/
+    (async function init(){
+      // AOS init
+      AOS.init({
+        duration: 750,
+        once: true,
+        offset: 70
+      });
+
+      initBubbles();
+
+      // First batch from Drive
+      await fetchDriveBatch();
+
+      // Render (initial)
+      visibleCount = 0;
+      render(true);
+
+      updateLoadMoreButton();
+    })();
+  </script>
+</body>
+</html>
