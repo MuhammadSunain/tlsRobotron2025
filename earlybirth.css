@@ -1,0 +1,98 @@
+/* ==============================
+   EARLY BIRD ANNOUNCEMENT
+   ============================== */
+.earlybird-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 10, 18, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.earlybird-modal {
+  max-width: 420px;
+  width: 90%;
+  padding: 26px 24px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.65);
+  text-align: center;
+  position: relative;
+  animation: popIn 0.45s ease;
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.earlybird-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 26px;
+  color: rgba(243, 246, 255, 0.7);
+  cursor: pointer;
+}
+
+.earlybird-close:hover {
+  color: #fff;
+}
+
+.earlybird-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(0, 229, 255, 0.14);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.earlybird-modal h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.earlybird-modal p {
+  font-size: 14px;
+  color: rgba(243, 246, 255, 0.85);
+  line-height: 1.6;
+}
+
+.earlybird-modal .highlight {
+  color: var(--accent-cyan);
+  font-weight: 900;
+}
+
+.earlybird-deadline {
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.hidden {
+  display: none !important;
+}

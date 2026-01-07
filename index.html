@@ -32,6 +32,7 @@
   <!-- AOS (Animate On Scroll) -->
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
   <link rel="stylesheet" href="homeresponsive.css">
+  <link rel="stylesheet" href="earlybirth.css">
 
   <style>
     :root {
@@ -2690,6 +2691,34 @@
     </div>
   </footer>
 
+  <!-- EARLY BIRD ANNOUNCEMENT MODAL -->
+<div class="earlybird-overlay hidden" id="earlyBirdOverlay">
+  <div class="earlybird-modal">
+    <button class="earlybird-close" id="closeEarlyBird">&times;</button>
+
+    <span class="earlybird-badge">
+      <i class="fa fa-bolt"></i> Early Bird Offer
+    </span>
+
+    <h3>Save ₨ 1,500 on Every Category</h3>
+
+    <p>
+      Register <b>before 20 January 2026</b> and get
+      <span class="highlight">₨ 1,500 OFF</span>
+      on <b>each competition category</b>.
+    </p>
+
+    <div class="earlybird-deadline">
+      ⏳ Offer valid till <b>20 Jan 2026</b>
+    </div>
+
+    <a href="registration.html" class="btn btn-primary mt-3">
+      Register Now <i class="fa fa-arrow-right ms-2"></i>
+    </a>
+  </div>
+</div>
+
+
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -2699,6 +2728,36 @@
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
   <script src="./scriptmain.js"></script>
+
+  <script>
+  (function showEarlyBirdPopup() {
+    const KEY = "robotron_earlybird_seen";
+    const overlay = document.getElementById("earlyBirdOverlay");
+    const closeBtn = document.getElementById("closeEarlyBird");
+
+    // Only show once
+    if (localStorage.getItem(KEY)) return;
+
+    // Show after small delay for better UX
+    setTimeout(() => {
+      overlay.classList.remove("hidden");
+    }, 2000);
+
+    closeBtn.addEventListener("click", () => {
+      overlay.classList.add("hidden");
+      localStorage.setItem(KEY, "1");
+    });
+
+    // Close on overlay click (optional)
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) {
+        overlay.classList.add("hidden");
+        localStorage.setItem(KEY, "1");
+      }
+    });
+  })();
+</script>
+
 
   <!-- Load categories for Home -->
   <script type="module">
